@@ -1,11 +1,35 @@
+'use client';
+
 import AcmeLogo from '@/app/ui/acme-logo';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { lusitana } from './ui/fonts';
 import Link from 'next/link';
 import styles from './ui/home.module.css';
 import Image from 'next/image';
+import { useEffect } from 'react';
+
+const delay = (time: number, cb: () => void) => {
+  setTimeout(() => {
+    cb();
+  }, time);
+};
 
 export default function Page() {
+  useEffect(() => {
+    async function getPromise() {
+      const arr = await Promise.all(
+        Array.from({ length: 3 }, (_, i) => {
+          return new Promise((resolve) => {
+            delay(i * 1000, () => resolve(i));
+          });
+        }),
+      );
+      console.log(arr);
+    }
+
+    getPromise();
+  }, []);
+
   return (
     <main className="flex min-h-screen flex-col p-6">
       <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">
